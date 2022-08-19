@@ -9,24 +9,67 @@ function writePassword() {
 
   function generatePassword(){
     
+    /* the characters needed for the four categories: 
+    - special characters
+    - lowercase characters
+    - uppercase characters
+    - numbers
+    */
+    var specialCharacters = " !\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
+    var uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var lowercaseLetters = uppercaseLetters.toLowerCase();
+    var numbers = "1234567890";
+    var confirmedCharacters = "";
+
+    var minLength = 8;
+    var maxLength = 128;
+
     var passwordLength = parseInt(prompt("How many characters would you like your password to be?"));
-    if (passwordLength >= 8 && passwordLength <= 128){
+    
+    if (passwordLength >= minLength && passwordLength <= maxLength){
       console.log(passwordLength);
 
-      var lowercaseChar = confirm("Would you like to include lowercase letters?");
-      var uppercaseChar = confirm("Would you like to include uppercase letters?");
-      var numericalChar = confirm("Would you like to include numbers?");
-      var specialChar = confirm("Would you like to include special characters?");
+      // checks if at least one of the four character types has been chosen
+      function generateCharacters(){
+        var includeLowercase = confirm("Would you like to include lowercase letters?");
+        var includeUppercase = confirm("Would you like to include uppercase letters?");
+        var includeNumbers = confirm("Would you like to include numbers?");
+        var includeSpecial = confirm("Would you like to include special characters?");
+      
+        if (includeLowercase || includeUppercase || includeNumbers || includeSpecial){
+          if (includeLowercase){
+          confirmedCharacters += lowercaseLetters;
+          }
+          if (includeUppercase){
+            confirmedCharacters += uppercaseLetters;
+          }
+          if (includeNumbers){
+            confirmedCharacters += numbers;
+          }
+          if (includeSpecial){
+            confirmedCharacters += specialCharacters;
+          } return;
+        } else {
+          alert("ERROR!! Must confirm one of the four character types! Please try again.");
+          generateCharacters();
+        }
+      }
 
-      console.log(lowercaseChar);
-      console.log(uppercaseChar);
-      console.log(numericalChar);
-      console.log(specialChar);
+      generateCharacters();
 
-    } else if (passwordLength < 8 || passwordLength > 128){
+      password = "";
+      for (var i = 0; i < passwordLength; i++){
+        var randomIndex = Math.floor(Math.random() * confirmedCharacters.length);
+        password += confirmedCharacters[randomIndex];
+      }
+      return password;
+
+    } 
+    else if (passwordLength < minLength || passwordLength > maxLength){
       alert("Password must be at least 8 characters, and no more than 128 characters.")
       generatePassword();
-    } else{
+    } 
+    else{
       return;
     }
     
@@ -38,8 +81,10 @@ function writePassword() {
 
   }
   var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
+  if (password !== undefined){
+    passwordText.value = password;
+  }
+  
 
 }
 
