@@ -28,11 +28,11 @@ header {
   color: hsl(206, 17%, 28%);
 }
 
-footer {
+.card-footer {
   text-align: center;
 }
 
-footer::before {
+.card-footer::before {
   content: " ";
   display: block;
   width: 100%;
@@ -40,7 +40,7 @@ footer::before {
   height: 2px;
 }
 
-footer::after {
+.card-footer::after {
   content: " ";
   display: block;
   clear: both;

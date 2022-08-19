@@ -8,12 +8,7 @@ function writePassword() {
 
   function generatePassword(){
     
-    /* the characters needed for the four categories: 
-    - special characters
-    - lowercase characters
-    - uppercase characters
-    - numbers
-    */
+    /// the characters needed for the four categories: special characters, lowercase characters, uppercase characters, and numbers
     var specialCharacters = " !\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
     var uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var lowercaseLetters = uppercaseLetters.toLowerCase();
@@ -58,7 +53,7 @@ function writePassword() {
 
       generateCharacters();
 
-      // generate password based on criteria and passwordLength
+      // generate password based on confirmed criteria and passwordLength
       password = "";
       for (var i = 0; i < passwordLength; i++){
         var randomIndex = Math.floor(Math.random() * confirmedCharacters.length);
@@ -67,22 +62,23 @@ function writePassword() {
       return password;
 
     } 
-    // error message if passwordLength is not from 8 to 128
+    // error message if passwordLength is not from 8 to 128, prompts user again
     else if (passwordLength < minPasswordLength || passwordLength > maxPasswordLength){
       alert("Password must be at least 8 characters, and no more than 128 characters.")
       generatePassword();
     } 
-    else{ // if the user chooses to cancel without inputting a numebr
+    else{ 
+      // if the user chooses to cancel without inputting a numebr
       return;
     }
   }
+
   // choose the element with the ID password from the document
   var passwordText = document.querySelector("#password");
 
-  // if the password has been generated successfully (aka NOT undefined)
+  // if the password has been generated successfully (aka NOT undefined), change the text in the HTML document to be the generated password
   if (password !== undefined){
     passwordText.value = password; 
-    // change the text in the HTML document to be the generated password
   }
   
 
