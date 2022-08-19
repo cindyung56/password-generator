@@ -1,7 +1,6 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-// alert, confirm, prompt
 
 // Write password to the #password input
 function writePassword() {
@@ -19,15 +18,16 @@ function writePassword() {
     var uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var lowercaseLetters = uppercaseLetters.toLowerCase();
     var numbers = "1234567890";
-    var confirmedCharacters = "";
+    var confirmedCharacters = ""; // string to store all confirmed criteria
 
-    var minLength = 8;
-    var maxLength = 128;
+    var minPasswordLength = 8;
+    var maxPasswordLength = 128;
 
     var passwordLength = parseInt(prompt("How many characters would you like your password to be?"));
-    
-    if (passwordLength >= minLength && passwordLength <= maxLength){
-      console.log(passwordLength);
+    // passwords must be at least 8 characters, and no more than 128 characters
+
+    if (passwordLength >= minPasswordLength && passwordLength <= maxPasswordLength){
+      // console.log(passwordLength);
 
       // checks if at least one of the four character types has been chosen
       function generateCharacters(){
@@ -35,7 +35,8 @@ function writePassword() {
         var includeUppercase = confirm("Would you like to include uppercase letters?");
         var includeNumbers = confirm("Would you like to include numbers?");
         var includeSpecial = confirm("Would you like to include special characters?");
-      
+        
+        // add criteria to confirmedCharacters if the user said yes
         if (includeLowercase || includeUppercase || includeNumbers || includeSpecial){
           if (includeLowercase){
           confirmedCharacters += lowercaseLetters;
@@ -49,14 +50,15 @@ function writePassword() {
           if (includeSpecial){
             confirmedCharacters += specialCharacters;
           } return;
-        } else {
+        } else { // in the case that the user chose no on all four criteria
           alert("ERROR!! Must confirm one of the four character types! Please try again.");
-          generateCharacters();
+          generateCharacters(); // repeat function until at least one prompt returns true
         }
       }
 
       generateCharacters();
 
+      // generate password based on criteria and passwordLength
       password = "";
       for (var i = 0; i < passwordLength; i++){
         var randomIndex = Math.floor(Math.random() * confirmedCharacters.length);
@@ -65,24 +67,22 @@ function writePassword() {
       return password;
 
     } 
-    else if (passwordLength < minLength || passwordLength > maxLength){
+    // error message if passwordLength is not from 8 to 128
+    else if (passwordLength < minPasswordLength || passwordLength > maxPasswordLength){
       alert("Password must be at least 8 characters, and no more than 128 characters.")
       generatePassword();
     } 
-    else{
+    else{ // if the user chooses to cancel without inputting a numebr
       return;
     }
-    
-
-
-
-
-
-
   }
+  // choose the element with the ID password from the document
   var passwordText = document.querySelector("#password");
+
+  // if the password has been generated successfully (aka NOT undefined)
   if (password !== undefined){
-    passwordText.value = password;
+    passwordText.value = password; 
+    // change the text in the HTML document to be the generated password
   }
   
 
